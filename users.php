@@ -1,22 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Realtime Chat App | CodingNepal</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-</head>
+<?php 
+    session_start();
+    
+    if (!isset($_SESSION['unique_id'])) {
+        header("location: login.php");
+    }
+?>
+
+<?php include_once "templates/header.php"; ?>
+
 <body>
     <div class="wrapper">
         <section class="users">
             <header>
+                <?php 
+                    include_once "php/config.php";
+
+                    $sql = mysqli_query($connection, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+                    
+                    $num_rows = $sql ? mysqli_num_rows($sql) : 0;
+                    if ($num_rows > 0) {
+                        $row = mysqli_fetch_assoc($sql);
+                    }
+                ?>
+
                 <div class="content">
-                    <img src="#" alt="">
+                    <img src="php/images/<?= $row['image'] ?>" alt="">
                     <div class="details">
-                        <span>Coding Nepal</span>
-                        <p>Active now</p>
+                        <span><?= $row['first_name']." ".$row['last_name'] ?></span>
+                        <p><?= $row['status'] ?></p>
                     </div>
                 </div>
                 
@@ -29,56 +40,6 @@
                 <button><i class="fas fa-search"></i></button>
             </div>
             <div class="users-list">
-                <a href="#">
-                    <div class="content">
-                        <img src="#" alt="">
-                        <div class="details">
-                            <span>Coding Nepal</span>
-                            <p>This is test message</p>
-                        </div>
-                    </div>
-                    <div class="status-dot"><i class="fas fa-circle"></i></div>
-                </a>
-                <a href="#">
-                    <div class="content">
-                        <img src="#" alt="">
-                        <div class="details">
-                            <span>Coding Nepal</span>
-                            <p>This is test message</p>
-                        </div>
-                    </div>
-                    <div class="status-dot"><i class="fas fa-circle"></i></div>
-                </a>
-                <a href="#">
-                    <div class="content">
-                        <img src="#" alt="">
-                        <div class="details">
-                            <span>Coding Nepal</span>
-                            <p>This is test message</p>
-                        </div>
-                    </div>
-                    <div class="status-dot"><i class="fas fa-circle"></i></div>
-                </a>
-                <a href="#">
-                    <div class="content">
-                        <img src="#" alt="">
-                        <div class="details">
-                            <span>Coding Nepal</span>
-                            <p>This is test message</p>
-                        </div>
-                    </div>
-                    <div class="status-dot"><i class="fas fa-circle"></i></div>
-                </a>
-                <a href="#">
-                    <div class="content">
-                        <img src="#" alt="">
-                        <div class="details">
-                            <span>Coding Nepal</span>
-                            <p>This is test message</p>
-                        </div>
-                    </div>
-                    <div class="status-dot"><i class="fas fa-circle"></i></div>
-                </a>
             </div>
         </section>
     </div>

@@ -2,24 +2,8 @@
 session_start();
 
 include_once "config.php";
-
-class IncompleteData extends Exception {}
-
-class NoImageFile extends Exception {}
-
-class InvalidImageFile extends Exception {}
-
-class FailedImageUpload extends Exception {}
-
-class InvalidEmail extends Exception {}
-
-class EmailAlreadyExists extends Exception {}
-
-class MySqliException extends Exception {
-    function __construct(string $error) {
-        parent::__construct($error);
-    }
-}
+include_once "functions.php";
+include_once "exceptions.php";
 
 class Data {
     public function __construct(mysqli $connection, string $firstName, string $lastName, string $email, string $password) {
@@ -104,19 +88,6 @@ try {
 
 } catch (Exception $e) {
     echo "Something went wrong!";
-}
-
-function anyEmptyElement(array $elements): bool {
-    $empty = false;
-
-    foreach ($elements as $element) {
-        if (empty($element)) {
-            $empty = true;
-            break;
-        }
-    }
-
-    return $empty;
 }
 
 function validateEmail(string $email) {
