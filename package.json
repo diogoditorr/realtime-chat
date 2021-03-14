@@ -1,0 +1,23 @@
+{
+  "name": "realtime-chat",
+  "version": "1.0.0",
+  "description": "* Project based in this [tutorial](https://www.youtube.com/watch?v=VnvzxGWiK54&t=6881s&ab_channel=CodingNepal) by [CodingNepal](https://www.youtube.com/channel/UCk7xIEmd3MeyhIu2StLX5yA)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diogoditorr/realtime-chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/diogoditorr/realtime-chat/issues"
+  },
+  "homepage": "https://github.com/diogoditorr/realtime-chat#readme",
+  "devDependencies": {
+    "eslint": "^7.22.0"
+  }
+}
