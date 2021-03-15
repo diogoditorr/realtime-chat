@@ -139,10 +139,10 @@ function registerUser(mysqli $connection, Data $data) {
 function verifyUserRegistration(mysqli $connection, Data $data) {
     $sql = mysqli_query($connection, "SELECT * FROM users WHERE email = '{$data->email}'");
     
-    $num_rows = $sql ? mysqli_num_rows($sql) : 0;
-    if ($num_rows > 0) {
-        $row = mysqli_fetch_assoc($sql);
-        $_SESSION['unique_id'] = $row['unique_id'];
+    $num_users = $sql ? mysqli_num_rows($sql) : 0;
+    if ($num_users > 0) {
+        $user = mysqli_fetch_assoc($sql);
+        $_SESSION['unique_id'] = $user['unique_id'];
     } else {
         throw new Exception();
     }

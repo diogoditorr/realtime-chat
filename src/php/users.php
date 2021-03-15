@@ -2,13 +2,17 @@
 session_start();
 
 include_once "config.php";
-$sql = mysqli_query($connection, "SELECT * FROM users");
+
 $output = "";
 
-$num_rows = $sql ? mysqli_num_rows($sql) : 0;
-if ($num_rows == 1) {
+$outgoing_user_id = $_SESSION['unique_id'];
+
+$sql = mysqli_query($connection, "SELECT * FROM users WHERE NOT unique_id = {$outgoing_user_id}");
+
+$num_users = $sql ? mysqli_num_rows($sql) : 0;
+if ($num_users == 0) {
     $output .= "No users are available to chat";
-} elseif ($num_rows > 0) {
+} elseif ($num_users > 0) {
     include "user_reference.php";
 }
 
