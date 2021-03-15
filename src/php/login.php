@@ -39,8 +39,17 @@ function matchCredentials(mysqli $connection, Data $data) {
 
     $num_users = $sql ? mysqli_num_rows($sql) : 0;
     if ($num_users > 0) {
-        $user = mysqli_fetch_assoc($sql);
-        $_SESSION['unique_id'] = $user['unique_id'];
+        $user = mysqli_fetch_assoc($sql); 
+        
+        $status = "Active now";
+        $sql2 = mysqli_query($connection, "
+            UPDATE users SET status = '{$status}'
+            WHERE unique_id = {$user['unique_id']}
+        ");
+
+        if ($sql2) {
+            $_SESSION['unique_id'] = $user['unique_id'];
+        }
     } else {
         throw new InvalidCredentials();
     }

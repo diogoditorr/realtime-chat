@@ -31,7 +31,7 @@
                     </div>
                 </div>
                 
-                <a href="#" class="logout">Logout</a>
+                <a href="php/logout.php?logout_id=<?= $row['unique_id'] ?>" class="logout">Logout</a>
             </header>
             
             <div class="search">
