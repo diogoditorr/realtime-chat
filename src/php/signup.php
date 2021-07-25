@@ -6,12 +6,18 @@ include_once "functions.php";
 include_once "exceptions.php";
 
 class Data {
+    public string $firstName;
+    public string $lastName;
+    public string $email;
+    public string $password;
+    public Image $image;
+
     public function __construct(mysqli $connection, string $firstName, string $lastName, string $email, string $password) {
         $this->firstName = mysqli_real_escape_string($connection, $firstName);
         $this->lastName = mysqli_real_escape_string($connection, $lastName);
         $this->email = mysqli_real_escape_string($connection, $email);
         $this->password = mysqli_real_escape_string($connection, $password);
-        
+
         if (anyEmptyElement([$firstName, $lastName, $email, $password])) {
             throw new IncompleteData();
         }
@@ -21,6 +27,12 @@ class Data {
 }
 
 class Image {
+    public string $name;
+    public string $type;
+    public string $tmpNamePath;
+    public string $extension;
+    public string $nameFormated;
+
     public function __construct(array $image) {
         date_default_timezone_set("America/Sao_Paulo");
         $this->name = $image['name'];
@@ -40,54 +52,6 @@ class Image {
             throw new NoImageFile();
         }
     }
-}
-
-try {
-    $data = new Data(
-        $connection, 
-        $_POST['firstName'], 
-        $_POST['lastName'], 
-        $_POST['email'], 
-        $_POST['password']
-    );
-
-    validateEmail($data->email);
-    verifyEmailExists($connection, $data->email);
-    validateImageExtension($data->image);
-
-    storageImage($data->image);
-    registerUser($connection, $data);
-
-    verifyUserRegistration($connection, $data);
-
-    echo "success";
-
-} catch (IncompleteData $e) {
-    echo "All input field are required!";
-    
-} catch (NoImageFile $e) {
-    echo "Please select an Image File!";
-
-} catch (InvalidEmail $e) {
-    echo "{$data->email} - This is not a valid email";
-
-} catch (EmailAlreadyExists $e) {
-    echo "{$data->email} - This email already exist!";
-
-} catch (InvalidImageFile $e) {
-    echo "
-        Select a valid Image File - jpeg, jpg, png
-        \"{$data->image->extension}\" given.
-    ";
-
-} catch (MySqliException $e) {
-    echo "Something went wrong!\n{$e->message}";
-
-} catch (FailedImageUpload $e) {
-    echo "It was not possible to upload the image";
-
-} catch (Exception $e) {
-    echo "Something went wrong!";
 }
 
 function validateEmail(string $email) {
@@ -146,4 +110,53 @@ function verifyUserRegistration(mysqli $connection, Data $data) {
     } else {
         throw new Exception();
     }
+}
+
+
+try {
+    $data = new Data(
+        $connection, 
+        $_POST['firstName'], 
+        $_POST['lastName'], 
+        $_POST['email'], 
+        $_POST['password']
+    );
+
+    validateEmail($data->email);
+    verifyEmailExists($connection, $data->email);
+    validateImageExtension($data->image);
+
+    storageImage($data->image);
+    registerUser($connection, $data);
+
+    verifyUserRegistration($connection, $data);
+
+    echo "success";
+
+} catch (IncompleteData $e) {
+    echo "All input field are required!";
+    
+} catch (NoImageFile $e) {
+    echo "Please select an Image File!";
+
+} catch (InvalidEmail $e) {
+    echo "{$data->email} - This is not a valid email";
+
+} catch (EmailAlreadyExists $e) {
+    echo "{$data->email} - This email already exist!";
+
+} catch (InvalidImageFile $e) {
+    echo "
+        Select a valid Image File - jpeg, jpg, png
+        \"{$data->image->extension}\" given.
+    ";
+
+} catch (MySqliException $e) {
+    echo "Something went wrong!\n{$e->message}";
+
+} catch (FailedImageUpload $e) {
+    echo "It was not possible to upload the image";
+
+} catch (Exception $e) {
+    echo "Something went wrong!";
 }

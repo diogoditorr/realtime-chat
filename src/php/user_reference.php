@@ -25,7 +25,7 @@ while ($user = mysqli_fetch_assoc($sql)) {
         $you = "";
     }
 
-    ($user['status'] == "Offline now") ? $offilne = "offline" : $offilne = "";
+    ($user['status'] == "Offline now") ? $offline = "offline" : $offline = "";
 
     $output .= '
         <a href="chat.php?user_id='.$user['unique_id'].'">
@@ -36,7 +36,7 @@ while ($user = mysqli_fetch_assoc($sql)) {
                     <p>'.$you.$msg.'</p>
                 </div>
             </div>
-            <div class="status-dot '.$offilne.'"><i class="fas fa-circle"></i></div>
+            <div class="status-dot '.$offline.'"><i class="fas fa-circle"></i></div>
         </a>
     ';
 }

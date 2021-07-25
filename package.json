@@ -19,5 +19,8 @@
   "homepage": "https://github.com/diogoditorr/realtime-chat#readme",
   "devDependencies": {
     "eslint": "^7.22.0"
+  },
+  "dependencies": {
+    "vue": "^2.6.13"
   }
 }
